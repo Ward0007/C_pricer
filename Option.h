@@ -5,15 +5,14 @@
 
 class Option
 {
-protected:
+private:
     double _expiry;
-    double getExpiry(){
-        return _expiry;
-    }
     virtual double payoff(double) =0;
+
 public:
     Option();
     Option(double _Expiry):_expiry(_Expiry){};
+    double getExpiry() {return _expiry;}
     ~Option(){};
 };
 
