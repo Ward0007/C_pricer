@@ -5,13 +5,16 @@
 
 class PutOption : public EuropeanVanillaOption {
 public:
-    PutOption(double expiry, double strike) : EuropeanVanillaOption(expiry, strike) {}
+    PutOption(double _Expiry, double _Strike) : EuropeanVanillaOption(_Expiry, _Strike) {}
     double payoff(double z) {
-        return (z < _strike) ? (_strike - z) : 0.0;
+        if (_strike >= z){
+        return _strike-z;
+        }
+        else{return 0;}
     }
 
-    optionType GetOptionType(){
-        return optionType::put;
+    override optionType GetOptionType(){
+        return put;
     }
 };
 #endif

@@ -6,7 +6,7 @@
 
 class EuropeanVanillaOption: protected Option{
     
-    private:
+    protected:
         double _strike;
 
     public:
