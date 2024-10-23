@@ -12,9 +12,12 @@ public:
         }
         else{return 0;}
     }
+    
     optionType GetOptionType() {
         return optionType::call;
     }
+    CallOption(){}
+    ~CallOption();
 };
 
 #endif
