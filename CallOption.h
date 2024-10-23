@@ -5,10 +5,11 @@
 
 class CallOption : protected EuropeanVanillaOption {
 public:
-    CallOption(double expiry, double strike) : EuropeanVanillaOption(expiry, strike) {}
+    CallOption(double _Expiry, double _Strike) : EuropeanVanillaOption(_Expiry, _Strike) {}
     double payoff(double z) {
-        if (z > getst)
-        return () ? (z - _strike) : 0.0;
+        if (z >= _Strike){
+        return 
+        }
     }
     optionType GetOptionType() {
         return optionType::call;
