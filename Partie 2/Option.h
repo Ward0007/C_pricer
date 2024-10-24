@@ -1,16 +1,20 @@
-#ifndef PUTOPTION_H
-#define PUTOPTION_H
-#include "EuropeanVanillaOption.h"
+#ifndef OPTION_H
+#define OPTION_H
+
 #pragma once
 
-class PutOption : public EuropeanVanillaOption {
+class Option
+{
+private:
+    double _expiry;
+protected:
+    virtual double payoff(double) = 0;  
 public:
-    PutOption();
-    PutOption(double, double);
-    double payoff(double) override;
-    optionType GetOptionType() override;
-    ~PutOption();
+    Option();
+    Option(double);
+    double getExpiry();
+    virtual ~Option(); 
 };
 
-#endif 
-#include "PutOption.cpp"
+#endif
+#include "Option.cpp"
