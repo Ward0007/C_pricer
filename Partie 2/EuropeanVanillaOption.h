@@ -8,9 +8,9 @@
 
 class EuropeanVanillaOption : protected Option {
 protected:
-    double _strike;  
-    enum class optionType {call, put};  
-    virtual optionType GetOptionType();  
+    double _strike;   
+    virtual optionType GetOptionType();
+    optionNature GetOptionNature() override;
     friend class BlackScholesPricer;
 
 public:

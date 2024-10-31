@@ -12,8 +12,8 @@ double DigitalCallOption::payoff(double z){
 		reutrn 0;
 	}
 }
-DigitalCallOption::optionType DigitalCallOption::GetOptionType() {
-	return optionType::DigitalCall;
+optionType DigitalCallOption::GetOptionType() {
+	return optionType::call;
 }
 
 DigitalCallOption::~DigitalCallOption() {}

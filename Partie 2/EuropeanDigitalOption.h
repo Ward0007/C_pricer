@@ -5,8 +5,9 @@
 class EuropeanDigitalOption: protected Option {
 protected:
     double _strike;
-    enum class optionType { DigitalCall, DigitalPut };
     virtual optionType GetOptionType();
+    optionNature GetOptionNature() override;
+    friend class BlackScholesPricer;
 public:
     EuropeanDigitalOption();
     EuropeanDigitalOption(double, double);

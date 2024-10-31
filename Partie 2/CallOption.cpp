@@ -12,7 +12,7 @@ double CallOption::payoff(double z) {
     }
 }
 
-CallOption::optionType CallOption::GetOptionType() {
+optionType CallOption::GetOptionType() {
     return optionType::call;
 }
 

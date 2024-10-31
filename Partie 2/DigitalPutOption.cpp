@@ -12,8 +12,8 @@ double DigitalPutOption::payoff(double z) {
 		reutrn 0;
 	}
 }
-DigitalPutOption::optionType DigitalPutOption::GetOptionType() {
-	return optionType::DigitalCall;
+optionType DigitalPutOption::GetOptionType() {
+	return optionType::put;
 }
 
 DigitalPutOption::~DigitalPutOption() {}

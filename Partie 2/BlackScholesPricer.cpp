@@ -18,14 +18,24 @@ double BlackScholesPricer::operator()() {
     double d1, d2, prix;
     d1= (1/(sigma * sqrt(T)))*(log(S / K) + (r + 0.5 * sigma*sigma) * T) ;
     d2 = d1 - sigma *sqrt(T);
-    if (Option_->GetOptionType() == EuropeanVanillaOption::optionType::call) {
-        prix = S*(1-0.5 * erfc(d1/sqrt(2))) - K * exp(-r * T) * (1-0.5 *erfc(d2 /sqrt(2)));
-    } 
-    else {
-        prix = -S*(1-0.5 * erfc(-d1/sqrt(2))) + K * exp(-r * T) * (1-0.5 *erfc(-d2 /sqrt(2)));
+    if (Option_->GetOptionNature() == optionNature::vanille) {
+        if (Option_->GetOptionType() == optionType::call) {
+            prix = S * (1 - 0.5 * erfc(d1 / sqrt(2))) - K * exp(-r * T) * (1 - 0.5 * erfc(d2 / sqrt(2)));
+        }
+        else {
+            prix = -S * (1 - 0.5 * erfc(-d1 / sqrt(2))) + K * exp(-r * T) * (1 - 0.5 * erfc(-d2 / sqrt(2)));
+        }
+        return prix;
     }
-    
-    return prix;
+    if (Option_->GetOptionNature() == optionNature::digital) {
+        if (Option_->GetOptionType() == optionType::call) {
+            prix= 0.5 * exp(-r * T) * std::erfc(-d2 / sqrt(2));
+        }
+        else {
+            prix= 0.5 * exp(-r * T) * std::erfc(d2 / sqrt(2));
+        }
+        return prix;
+    }
 }
 double BlackScholesPricer::delta(){
     double S = Asset_price_;
@@ -33,14 +43,26 @@ double BlackScholesPricer::delta(){
     double r = Interest_rate_;
     double T = Option_->getExpiry();
     double sigma = Volatility_;
-    double d,Delta;
-    d= (log(S / K) + (r + 0.5 * sigma * sigma) * T) / (sigma *sqrt(T));
-    if (Option_->GetOptionType() == EuropeanVanillaOption::optionType::call) {
-        Delta = 1-0.5 * erfc(d/sqrt(2));
-    } 
-    else {
-        Delta = -0.5 * erfc(d/sqrt(2));
+    double d1,d2,Delta;
+    d1 = (1 / (sigma * sqrt(T))) * (log(S / K) + (r + 0.5 * sigma * sigma) * T);
+    d2 = d1 - sigma * sqrt(T);
+    if (Option_->GetOptionNature() == optionNature::vanille) {
+        if (Option_->GetOptionType() == optionType::call) {
+            Delta= 0.5 * std::erfc(-d1 / sqrt(2));
+        }
+        else {
+            Delta= -0.5 * std::erfc(-d1 / sqrt(2));
+        }
+        return Delta;
     }
-    
-    return Delta;
+    else if (Option_->GetOptionNature() == optionNature::digital) {
+        if (Option_->GetOptionType() == optionType::call) {
+            Delta= 0.5 * exp(-r * T) * std::erfc(-d1 / sqrt(2));
+        }
+        else {
+            Delta= 0.5 * exp(-r * T) * std::erfc(d2 / sqrt(2));
+        }
+        return Delta;
     }
+
+}

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "EuropeanDigitalOption.h"
 
 class DigitalCallOption : public EuropeanDigitalOption {

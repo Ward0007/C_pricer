@@ -1,4 +1,6 @@
 #include "CRRPricer.h"
+#include "BinaryTree.h"
+#include "BinaryTree.cpp"
 #include "cmath"
 
 CRRPricer::CRRPricer(Option* option, int depth, double asset_price, double up, double down, double interest_rate) 
@@ -11,7 +13,7 @@ CRRPricer::CRRPricer(Option* option, int depth, double asset_price, double up, d
 void CRRPricer::compute() {
 	double q = (R - D) / (U - D);
 	tree.setDepth(N);
-	for (i = 0, i <= N, i++) {
+	for (i = 0; i <= N; i++) {
 		double stock_price = S_0 * std::pow(1 + D, n - i) * std::pow(1 + U, i);
 		tree.setNode(N, i, option->payoff(stock_price));
 	}
@@ -32,7 +34,7 @@ int CRRPricer::operator(bool closed_form) {
 	if (closed_form == true) {
 		double q = (R - D) / (U - D);
 		double H_0_0 = 0.0;
-		for (i = 0, i <= N, i++) {
+		for (i = 0; i <= N; i++) {
 			double stock_price = S_0 * std::pow(1 + D, n - i) * std::pow(1 + U, i);
 			H_0_0+=std::tgamma(N+1)*std::pow(q,i)*std::pow(1-q,N-i+1)*option->payoff(stock_price)/std::tgamma(i+1)*std::tgamma(N-i+1)
 		}

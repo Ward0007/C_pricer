@@ -3,6 +3,8 @@
 #include <string>
 #include <iostream>
 
+optionNature EuropeanVanillaOption::GetOptionNature() { return optionNature::vanille; }
+
 EuropeanVanillaOption::EuropeanVanillaOption() : _strike(0) {}
 
 EuropeanVanillaOption::EuropeanVanillaOption(double expiry, double strike) : Option(expiry), _strike(strike) {

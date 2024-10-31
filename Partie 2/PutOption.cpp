@@ -12,7 +12,7 @@ double PutOption::payoff(double z) {
     }
 }
 
-PutOption::optionType PutOption::GetOptionType() {
+optionType PutOption::GetOptionType() {
     return optionType::put;
 }
 PutOption::~PutOption() {}

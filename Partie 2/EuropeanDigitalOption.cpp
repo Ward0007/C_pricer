@@ -3,6 +3,8 @@
 #include <string>
 #include <iostream>
 
+optionNature EuropeanDigitalOption::GetOptionNature() { return optionNature::digital; }
+
 EuropeanDigitalOption::EuropeanDigitalOption(): _strike(0){}
 
 
