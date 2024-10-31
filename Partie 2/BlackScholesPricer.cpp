@@ -19,10 +19,10 @@ double BlackScholesPricer::operator()() {
     d1= (1/(sigma * sqrt(T)))*(log(S / K) + (r + 0.5 * sigma*sigma) * T) ;
     d2 = d1 - sigma *sqrt(T);
     if (Option_->GetOptionType() == EuropeanVanillaOption::optionType::call) {
-        prix = S*(1-0.5 * erfc(d1/sqrt(2))) - K * exp(-r * T) * (1-0.5 *erfc(d2 /sqrt(2)));
+        prix = S*0.5 * erfc(d1/sqrt(2)) - K * exp(-r * T) * 0.5 *erfc(d2 /sqrt(2));
     } 
     else {
-        prix = -S*(1-0.5 * erfc(-d1/sqrt(2))) + K * exp(-r * T) * (1-0.5 *erfc(-d2 /sqrt(2)));
+        prix = -S*0.5 * erfc(-d1/sqrt(2)) + K * exp(-r * T) *0.5 *erfc(-d2 /sqrt(2));
     }
     
     return prix;
@@ -36,10 +36,10 @@ double BlackScholesPricer::delta(){
     double d,Delta;
     d= (log(S / K) + (r + 0.5 * sigma * sigma) * T) / (sigma *sqrt(T));
     if (Option_->GetOptionType() == EuropeanVanillaOption::optionType::call) {
-        Delta = 1-0.5 * erfc(d/sqrt(2));
+        Delta = 0.5 * erfc(d/sqrt(2));
     } 
     else {
-        Delta = -0.5 * erfc(d/sqrt(2));
+        Delta = 0.5 * erfc(d/sqrt(2))-1;
     }
     
     return Delta;
