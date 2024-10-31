@@ -7,13 +7,14 @@ class Option
 {
 private:
     double _expiry;
-    virtual double payoff(double) =0;
-
+protected:
+    virtual double payoff(double) = 0;  
 public:
     Option();
-    Option(double _Expiry):_expiry(_Expiry){};
-    double getExpiry() {return _expiry;}
-    ~Option(){};
+    Option(double);
+    double getExpiry();
+    virtual ~Option(); 
 };
 
 #endif
+#include "Option.cpp"

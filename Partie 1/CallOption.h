@@ -3,21 +3,15 @@
 #include "EuropeanVanillaOption.h"
 #pragma once
 
-class CallOption : protected EuropeanVanillaOption {
+class CallOption : public EuropeanVanillaOption {
 public:
-    CallOption(double _Expiry, double _Strike) : EuropeanVanillaOption(_Expiry, _Strike) {}
-    double payoff(double z) {
-        if (z >= _strike){
-        return z-_strike;
-        }
-        else{return 0;}
-    }
-    
-    optionType GetOptionType() {
-        return optionType::call;
-    }
-    CallOption(){}
+    CallOption();
+    CallOption(double, double);
+    double payoff(double) override;
+    optionType GetOptionType() override;
     ~CallOption();
+    
 };
 
-#endif
+#endif 
+#include "CallOption.cpp"
