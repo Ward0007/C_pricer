@@ -11,6 +11,7 @@ protected:
     double _strike;  
     enum class optionType {call, put};  
     virtual optionType GetOptionType();  
+    friend class BlackScholesPricer;
 
 public:
     EuropeanVanillaOption();
