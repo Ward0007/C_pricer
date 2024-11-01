@@ -1,14 +1,16 @@
 #ifndef OPTION_H
 #define OPTION_H
-
 #pragma once
+#include <iostream>
+#include <vector>
 enum class optionType {
     call,
     put 
 };
 enum class optionNature {
     digital,
-    vanille
+    vanille,
+    asian
 };
 class Option
 {
@@ -21,8 +23,12 @@ public:
     Option();
     Option(double);
     double getExpiry();
+    virtual double getStrike();
+    double payoffPath(std::vector<double> prices);
+    virtual std::vector<double> getTimeSteps();
     virtual optionNature GetOptionNature();
     virtual optionType GetOptionType();
+    virtual bool isAsianOption() const;
     virtual ~Option(); 
 };
 
