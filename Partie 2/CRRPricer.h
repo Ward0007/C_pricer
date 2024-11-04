@@ -17,7 +17,7 @@ public:
 	CRRPricer(Option* option, int depth, double asset_price, double up, double down, double interest_rate);
 	void compute();
 	int get(int n, int i);
-	int operator(bool closed_form=false);
+	int operator()(bool closed_form=false);
 
 
 	~CRRPricer();
