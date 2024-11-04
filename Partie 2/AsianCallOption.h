@@ -1,5 +1,5 @@
 #pragma once
-#include 'AsianOption.h'
+#include "AsianOption.h"
 #include <iostream>
 #include <vector>
 
@@ -13,5 +13,5 @@ public:
 	optionType GetOptionType() override;
 	double getStrike() const override;
 	double payoff(double) override;
-	double payoffPath(vector<double> prices);
+	double payoffPath(std::vector<double> prices);
 };

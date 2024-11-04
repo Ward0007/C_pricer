@@ -1,10 +1,10 @@
-#include 'AsianCallOption.h'
+#include "AsianCallOption.h"
 #include <iostream>
 #include <vector>
 
-AsianCallOption::AsianCallOption(vector<double> times, double strikes) : AsianOption(times), _strike(strikes) {
+AsianCallOption::AsianCallOption(std::vector<double> times, double strikes) : AsianOption(times), _strike(strikes) {
 	if (_strike < 0.0) { 
-		throw invalid_argument("ERROR: Strike negative"); 
+		throw std::invalid_argument("ERROR: Strike negative"); 
 	}
 }
 
@@ -15,7 +15,7 @@ optionType AsianCallOption::GetOptionType() {
 double AsianCallOption::getStrike() { 
 	return _strike; 
 }
-double AsianCallOption::payoffPath(vector<double> prices) {
+double AsianCallOption::payoffPath(std::vector<double> prices) {
 	double price = 0;
 	for (size_t i = 0; i < prices.size(); i++) {
 		price += prices[i];
