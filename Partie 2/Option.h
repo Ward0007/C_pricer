@@ -17,7 +17,7 @@ class Option
 private:
     double _expiry;
 protected:
-    virtual double payoff(double) = 0;
+    virtual double payoff(double) const = 0;
     friend class BlackScholesPricer
 public:
     Option();

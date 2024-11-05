@@ -18,6 +18,8 @@ public:
     EuropeanVanillaOption(double, double);
     virtual ~EuropeanVanillaOption();
     virtual double payoff(double ) = 0;
+    friend class BlackScholesPricer;
+
 };
 
 #endif

@@ -7,7 +7,7 @@ class CallOption : public EuropeanVanillaOption {
 public:
     CallOption();
     CallOption(double, double);
-    double payoff(double) override;
+    double payoff(double) const override;
     optionType GetOptionType() override;
     ~CallOption();
     

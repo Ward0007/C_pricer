@@ -8,11 +8,11 @@ class Option
 private:
     double _expiry;
 protected:
-    virtual double payoff(double) = 0;  
+    virtual double payoff(double) const= 0;
+    double getExpiry() const;  
 public:
     Option();
     Option(double);
-    double getExpiry();
     virtual ~Option(); 
 };
 
