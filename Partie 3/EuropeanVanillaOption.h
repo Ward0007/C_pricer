@@ -6,18 +6,20 @@
 
 #pragma once
 
-class EuropeanVanillaOption : protected Option {
+class EuropeanVanillaOption : public Option {
+private:
+    double _strike;
 protected:
-    double _strike;  
     enum class optionType {call, put};  
     virtual optionType GetOptionType();  
+    double getStrike()const ; 
     friend class BlackScholesPricer;
 
 public:
     EuropeanVanillaOption();
     EuropeanVanillaOption(double, double);
     virtual ~EuropeanVanillaOption();
-    virtual double payoff(double ) = 0;
+    friend class BlackScholesPricer;
 };
 
 #endif

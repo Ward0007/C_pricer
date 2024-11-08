@@ -1,17 +1,33 @@
 #include "AsianOption.h"
-#include <vector>
-#include <iostream>
+#include <numeric>      
+#include <stdexcept>   
 
-optionNature AsianOption::GetOptionNature() { return optionNature::asian; }
+AsianOption::AsianOption() : _strike(0.0) {}
 
-AsianOption::AsianOption(std::vector<double> times, double strike) : _time(times), _strike(strike) {}
+AsianOption::AsianOption(double expiry, double strike, const std::vector<double>& time_steps)
+    : Option(expiry), _strike(strike), Time_steps(time_steps) {}
 
-std::vector<double> AsianOption::getTimeSteps() { return _time; }
+AsianOption::~AsianOption() {}
 
-double AsianOption::getExpiry() {return 0.0;}
+double AsianOption::getStrike() const {
+    return _strike;
+}
 
-double AsianOption::getStrike() { return 0.0; }
+const std::vector<double>& AsianOption::getTimeSteps() const {
+    return Time_steps;
+}
 
-bool AsianOption::isAsianOption() {
+double AsianOption::payoffPath(std::vector<double>& prices) const {
+    if (prices.empty()) {
+        throw std::invalid_argument("Empty list");
+    }
+    double sum = 0.0;
+    for (double price : prices) {
+        sum += price;  
+    }
+    double average_price = sum / prices.size(); 
+    return payoff(average_price); 
+}
+bool AsianOption::isAsianOption() const {
     return true;
 }

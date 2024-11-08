@@ -1,6 +1,7 @@
 #ifndef BLACKSCHOLESPRICER_H
 #define BLACKSCHOLESPRICER_H
 #include "EuropeanVanillaOption.h"
+#include "EuropeanDigitalOption.h"
 #pragma once
 
 class BlackScholesPricer

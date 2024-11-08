@@ -1,35 +1,21 @@
 #ifndef OPTION_H
 #define OPTION_H
-#pragma once
-#include <iostream>
 #include <vector>
-enum class optionType {
-    call,
-    put 
-};
-enum class optionNature {
-    digital,
-    vanille,
-    asian
-};
+#pragma once
+
 class Option
 {
 private:
     double _expiry;
-protected:
-    virtual double payoff(double) const = 0;
-    friend class BlackScholesPricer
+    
 public:
     Option();
     Option(double);
-    double getExpiry();
-    virtual double getStrike();
-    double payoffPath(std::vector<double> prices);
-    virtual std::vector<double> getTimeSteps();
-    virtual optionNature GetOptionNature();
-    virtual optionType GetOptionType();
-    virtual bool isAsianOption() const;
+    virtual double payoff(double) const= 0;
     virtual ~Option(); 
+    double getExpiry() const;  
+    virtual double payoffPath(std::vector<double>& prices) const;
+    virtual bool isAsianOption() const {return false;};
 };
 
 #endif

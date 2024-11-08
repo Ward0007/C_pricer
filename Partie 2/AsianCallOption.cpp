@@ -1,33 +1,21 @@
 #include "AsianCallOption.h"
-#include <iostream>
-#include <vector>
 
-AsianCallOption::AsianCallOption(std::vector<double> times, double strikes) : AsianOption(times), _strike(strikes) {
-	if (_strike < 0.0) { 
-		throw std::invalid_argument("ERROR: Strike negative"); 
-	}
+AsianCallOption::AsianCallOption() : AsianOption() {}
+
+AsianCallOption::AsianCallOption(double expiry, double strike, const std::vector<double>& time_steps)
+    : AsianOption(expiry, strike, time_steps) {}
+
+double AsianCallOption::payoff(double price) const {
+    double payoff_value = price - getStrike();
+    if (payoff_value > 0.0) {
+        return payoff_value;  
+    } else {
+        return 0.0;           
+    }
 }
 
-optionType AsianCallOption::GetOptionType() {
+AsianOption::optionType AsianCallOption::GetOptionType() const {
     return optionType::call;
 }
 
-double AsianCallOption::getStrike() { 
-	return _strike; 
-}
-double AsianCallOption::payoffPath(std::vector<double> prices) {
-	double price = 0;
-	for (size_t i = 0; i < prices.size(); i++) {
-		price += prices[i];
-	}
-
-	if (price / prices.size() >= getStrike()) {
-		return price / prices.size() - getStrike();
-	}
-	else { 
-		return 0.0; 
-	}
-}
-
-
-
+AsianCallOption::~AsianCallOption() {}

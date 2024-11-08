@@ -30,7 +30,7 @@ void BinaryTree<T>::setNode(int step, int node, T value) {
 
 
 template <typename T>
-T BinaryTree<T>:: getNode(int step, int node){
+T BinaryTree<T>:: getNode(int step, int node) const{
     if (step < 0 || step > _depth) {
         throw std::out_of_range("Error : step " + std::to_string(step) +" out of range.");
     }

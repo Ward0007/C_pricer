@@ -8,7 +8,7 @@ class PutOption : public EuropeanVanillaOption {
 public:
     PutOption();
     PutOption(double, double);
-    double payoff(double) override;
+    double payoff(double) const override;
     optionType GetOptionType() override;
     ~PutOption();
 };

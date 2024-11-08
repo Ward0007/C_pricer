@@ -4,15 +4,15 @@ CallOption::CallOption() {}
 
 CallOption::CallOption(double _Expiry, double _Strike) : EuropeanVanillaOption(_Expiry, _Strike) {}
 
-double CallOption::payoff(double z) {
-    if (z >= _strike) {
-        return z - _strike;
+double CallOption::payoff(double z) const {
+    if (z >= getStrike()) {
+        return z - getStrike();
     } else {
         return 0;
     }
 }
 
-optionType CallOption::GetOptionType() {
+CallOption::optionType CallOption::GetOptionType() {
     return optionType::call;
 }
 

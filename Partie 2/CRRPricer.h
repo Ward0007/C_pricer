@@ -2,6 +2,7 @@
 #include <iostream>
 #include "BinaryTree.h"
 #include "BinaryTree.cpp"
+#include "Option.h"
 
 class CRRPricer {
 private:
@@ -11,14 +12,15 @@ private:
 	double U;
 	double D;
 	double R;
-	BinaryTree<int> tree;
+	BinaryTree<double> tree;
 
 public:
-	CRRPricer(Option* option, int depth, double asset_price, double up, double down, double interest_rate);
+	CRRPricer(Option*, int, double, double, double, double);
 	void compute();
-	int get(int n, int i);
+	double get(int n, int i) const;
 	int operator()(bool closed_form=false);
 
 
 	~CRRPricer();
 };
+#include "CRRPricer.cpp"

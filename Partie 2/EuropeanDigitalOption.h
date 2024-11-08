@@ -1,17 +1,26 @@
-#pragma once
-#include "Option.h"
-#include <iostream>
+#ifndef EUROPEANDIGITALOPTION_H
+#define EUROPEANDIGITALOPTION_H
 
-class EuropeanDigitalOption: protected Option {
-protected:
+#include "Option.h"
+#include <stdexcept>
+
+#pragma once
+
+class EuropeanDigitalOption : public Option {
+private:
     double _strike;
-    virtual optionType GetOptionType();
-    optionNature GetOptionNature() override;
+protected:
+    enum class optionType { call, put };
+    virtual optionType GetOptionType() = 0;  // Méthode virtuelle pure pour obtenir le type d'option
+    double getStrike() const;
     friend class BlackScholesPricer;
+
 public:
     EuropeanDigitalOption();
-    EuropeanDigitalOption(double, double);
+    EuropeanDigitalOption(double strike, double expiry);
     virtual ~EuropeanDigitalOption();
-    virtual double payoff(double) = 0;
-
+    friend class BlackScholesPricer;
 };
+
+#endif
+#include "EuropeanDigitalOption.cpp"

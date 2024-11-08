@@ -1,32 +1,21 @@
 #include "AsianPutOption.h"
-#include <iostream>
-#include <vector>
 
-AsianPutOption::AsianPutOption(std::vector<double> times, double strikes) : AsianOption(times), _strike(strikes) {
-	if (_strike < 0.0) {
-		throw std::invalid_argument("ERROR: Strike negative");
-	}
+AsianPutOption::AsianPutOption() : AsianOption() {}
+
+AsianPutOption::AsianPutOption(double expiry, double strike, const std::vector<double>& time_steps)
+    : AsianOption(expiry, strike, time_steps) {}
+
+double AsianPutOption::payoff(double price) const {
+    double payoff_value = getStrike() - price;
+    if (payoff_value > 0.0) {
+        return payoff_value;  
+    } else {
+        return 0.0;           
+    }
 }
 
-optionType AsianPutOption::GetOptionType() {
-	return optionType::put;
+AsianOption::optionType AsianPutOption::GetOptionType() const {
+    return optionType::put;
 }
 
-double AsianPutOption::getStrike() {
-	return _strike;
-}
-double AsianPutOption::payoffPath(std::vector<double> prices) {
-	double price = 0;
-	for (size_t i = 0; i < prices.size(); i++) {
-		price += prices[i];
-	}
-	if (price / prices.size() <= GetStrike()) {
-		return getStrike() - (price / prices.size());
-	}
-	else { 
-		return 0.0;
-	}
-}
-
-
-
+AsianPutOption::~AsianPutOption() {}

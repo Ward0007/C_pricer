@@ -1,18 +1,25 @@
-#pragma once
+#ifndef ASIANOPTION_H
+#define ASIANOPTION_H
+
 #include "Option.h"
-#include <iostream>
 #include <vector>
 
-class AsianOtpion :public Option {
+class AsianOption : public Option {
 private:
-	std::vector<double> _time;
-	double _strike;
+    double _strike;                      
+    std::vector<double> Time_steps;      
+protected:
+    enum class optionType { call, put }; 
+    virtual optionType GetOptionType() const = 0; 
+    double getStrike() const;            
+
 public:
-	AsianOtpion(std::vector<double> times, double strike);
-	virtual optionType GetOptionType();
-	optionNature GetOptionNature() override;
-	double getExpiry() const override;
-	double getStrike() const;
-	virtual std::vector<double> getTimeSteps();
-	bool isAsianOption() const override;
+    AsianOption();
+    AsianOption(double, double, const std::vector<double>&);
+    virtual ~AsianOption();
+    double payoffPath(std::vector<double>& prices) const override;
+    const std::vector<double>& getTimeSteps() const;
+	bool isAsianOption() const override ;
 };
+
+#endif

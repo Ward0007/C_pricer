@@ -1,52 +1,71 @@
 #include "CRRPricer.h"
-#include "BinaryTree.h"
-#include "BinaryTree.cpp"
-#include "Option.h"
-#include "cmath"
+#include <cmath>
+#include <stdexcept>
 
 CRRPricer::CRRPricer(Option* option, int depth, double asset_price, double up, double down, double interest_rate) 
 	:option(option), N(depth), S_0(asset_price), U(up), D(down), R(interest_rate) {
-	if (asset_price <= 0 || down<-1 || down > up || interest_rate <= -1 || interest_rate > up) {
-		std::cout << "Arbitrage is possible" << std::endl;
+	if (option->isAsianOption()) {
+        throw std::invalid_argument("CRRPricer ne prend pas en charge les options asiatiques.");
+    }
+	if (!( down < interest_rate && interest_rate <up )) {
+		throw std::invalid_argument( "ERROR : Arbitrage is possible" );
 	}
-	else if (option->isAsianOption()) {
-		throw std::runtime_error("ERROR");
-	}
+	tree.setDepth(N + 1);
 }
 
 void CRRPricer::compute() {
 	double q = (R - D) / (U - D);
 	tree.setDepth(N);
 	for (int i = 0; i <= N; i++) {
-		double stock_price = S_0 * std::pow(1 + D, N - i) * std::pow(1 + U, i);
+		double stock_price = S_0;
+		for(int j=0; j<i;j++)
+		{
+			stock_price*=(1+U);
+		}
+		for ( int j=0; j<(N-1);j++)
+		{
+			stock_price*=(1+D);
+		}
+	
 		tree.setNode(N, i, option->payoff(stock_price));
 	}
-	for (int j = N - 1; j >= 0; j--) {
-		for (int i = 0; i <= j; i++) {
-			tree.setNode(j, i, (q * tree.getNode(j + 1, i + 1) + (1 - q) * tree.getNode(j + 1, i)) / (1 + R));
+	for (int n = N - 1; n >= 0; n--) {
+		for (int i = 0; i <= n; i++) {
+			tree.setNode(n, i, (q * tree.getNode(n + 1, i + 1) + (1 - q) * tree.getNode(n + 1, i)) / (1 + R));
 		}
 	}
 
 }
 
-int CRRPricer::get(int n, int i) {
-	compute;
-	tree.getNode(n, i);
+double CRRPricer::get(int n, int i) const {
+    return tree.getNode(n, i);
 }
 
-int CRRPricer::operator()(bool closed_form) {
+double CRRPricer::operator()(bool closed_form) {
 	if (closed_form == true) {
 		double q = (R - D) / (U - D);
 		double H_0_0 = 0.0;
+		double q_i = 1.0;                    
+        double p = 1.0;  //(1 - q)^0 = 1
+        double bin_coef = 1.0;
 		for (int i = 0; i <= N; i++) {
-			double stock_price = S_0 * std::pow(1 + D, N - i) * std::pow(1 + U, i);
-			H_0_0+=std::tgamma(N+1)*std::pow(q,i)*std::pow(1-q,N-i+1)*option->payoff(stock_price)/std::tgamma(i+1)*std::tgamma(N-i+1);
+			double stock_price = S_0;
+			for (int j = 0; j < i; ++j) stock_price *= (1 + U);
+            for (int j = 0; j < (N - i); ++j) stock_price *= (1 + D);
+			H_0_0+= bin_coef * q_i * p * option->payoff(stock_price);
+			q_i *= q;                        
+            p *= (1 - q); 
+            bin_coef *= (N - i) / (i + 1);
 		}
-		H_0_0 = H_0_0 / std::pow(1 + R, N);
-		return H_0_0;
+		double factor = 1.0;
+        for (int j = 0; j < N; ++j) {
+            factor *= (1 + R);
+        }
+		return H_0_0/factor;
 	}
 	else {
-		get(0, 0);
+		compute();
+		return get(0, 0);
 	}
 
 }

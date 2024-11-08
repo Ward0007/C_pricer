@@ -7,13 +7,13 @@ class Option
 {
 private:
     double _expiry;
-protected:
-    virtual double payoff(double) const= 0;
-    double getExpiry() const;  
+
 public:
+    virtual double payoff(double) const= 0;
     Option();
     Option(double);
     virtual ~Option(); 
+    double getExpiry() const;  
 };
 
 #endif

@@ -1,17 +1,18 @@
-#pragma once
+#ifndef ASIANCALLOPTION_H
+#define ASIANCALLOPTION_H
+
 #include "AsianOption.h"
-#include <iostream>
-#include <vector>
 
+#pragma once
 
-class AsianCallOption :public AsianOption {
-private:
-	double _strike;
-	std::vector<double> _time;
+class AsianCallOption : public AsianOption {
 public:
-	AsianCallOption(std::vector<double> times, double strikes);
-	optionType GetOptionType() override;
-	double getStrike() const override;
-	double payoff(double) override;
-	double payoffPath(std::vector<double> prices);
+    AsianCallOption();
+    AsianCallOption(double, double, const std::vector<double>&);
+    double payoff(double) const override;  
+    optionType GetOptionType() const override;   
+    ~AsianCallOption();
 };
+
+#endif
+#include "AsianCallOption.cpp"

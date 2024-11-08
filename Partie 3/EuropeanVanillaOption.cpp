@@ -13,6 +13,11 @@ EuropeanVanillaOption::EuropeanVanillaOption(double expiry, double strike) : Opt
         throw std::invalid_argument("ERROR : Strike " + std::to_string(strike) +" is negative.");
     }
 }
+
+double EuropeanVanillaOption::getStrike() const {
+    return _strike;
+}
+
 EuropeanVanillaOption::optionType EuropeanVanillaOption::GetOptionType() {
     throw std::logic_error("GetOptionType is not implemented for EuropeanVanillaOption");
 }

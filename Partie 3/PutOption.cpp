@@ -4,9 +4,9 @@ PutOption::PutOption() {}
 
 PutOption::PutOption(double _Expiry, double _Strike) : EuropeanVanillaOption(_Expiry, _Strike) {}
 
-double PutOption::payoff(double z) {
-    if (_strike >= z) {
-        return _strike - z;
+double PutOption::payoff(double z) const {
+    if (getStrike() >= z) {
+        return getStrike() - z;
     } else {
         return 0;
     }

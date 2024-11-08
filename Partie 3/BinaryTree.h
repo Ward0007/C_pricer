@@ -15,7 +15,7 @@ class BinaryTree
     public:
         void setDepth(int );
         void setNode(int, int, T);
-        T getNode(int, int);
+        T getNode(int, int) const;
         void display();
         BinaryTree();
         ~BinaryTree();
