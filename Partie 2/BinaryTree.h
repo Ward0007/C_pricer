@@ -19,8 +19,11 @@ class BinaryTree
         void display();
         BinaryTree();
         ~BinaryTree();
+        std::string repeatString(int n);  
+        std::string lien(int n);
 };
-std::string repeatString(int n);  
-std::string lien(int n);
-#endif
+
 #include "BinaryTree.cpp"
+#endif
+
+

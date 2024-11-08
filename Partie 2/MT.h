@@ -5,8 +5,6 @@
 
 class MT {
 private:
-    MT();
-    ~MT();
 
     MT(const MT&) = delete;
     MT& operator=(const MT&) = delete;
@@ -15,7 +13,8 @@ private:
     std::mt19937 generator;                 
 
 public:
-
+    MT();
+    ~MT();
     static double rand_unif();      
     static double rand_norm();      
 };

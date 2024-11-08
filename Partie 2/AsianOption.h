@@ -16,10 +16,11 @@ protected:
 public:
     AsianOption();
     AsianOption(double, double, const std::vector<double>&);
-    virtual ~AsianOption();
+    
     double payoffPath(std::vector<double>& prices) const override;
     const std::vector<double>& getTimeSteps() const;
 	bool isAsianOption() const override ;
+	~AsianOption();
 };
 
 #endif

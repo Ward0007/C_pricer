@@ -18,9 +18,10 @@ protected:
 public:
     EuropeanDigitalOption();
     EuropeanDigitalOption(double strike, double expiry);
-    virtual ~EuropeanDigitalOption();
+    
     friend class BlackScholesPricer;
+    virtual ~EuropeanDigitalOption();
 };
 
 #endif
-#include "EuropeanDigitalOption.cpp"
+

@@ -8,7 +8,7 @@ double Option::getExpiry() const {
     return _expiry;
 }
 
-Option::~Option() {}
+
 
 double Option::payoffPath(std::vector<double>& prices) const {
     if (prices.empty()) {
@@ -16,3 +16,5 @@ double Option::payoffPath(std::vector<double>& prices) const {
     }
     return payoff(prices.back());
 }
+
+Option::~Option() {}

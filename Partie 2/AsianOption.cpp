@@ -1,13 +1,14 @@
-#include "AsianOption.h"
 #include <numeric>      
 #include <stdexcept>   
+#include "AsianOption.h"
+
 
 AsianOption::AsianOption() : _strike(0.0) {}
 
 AsianOption::AsianOption(double expiry, double strike, const std::vector<double>& time_steps)
     : Option(expiry), _strike(strike), Time_steps(time_steps) {}
 
-AsianOption::~AsianOption() {}
+
 
 double AsianOption::getStrike() const {
     return _strike;
@@ -31,3 +32,4 @@ double AsianOption::payoffPath(std::vector<double>& prices) const {
 bool AsianOption::isAsianOption() const {
     return true;
 }
+AsianOption::~AsianOption() {}

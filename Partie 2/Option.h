@@ -12,11 +12,12 @@ public:
     Option();
     Option(double);
     virtual double payoff(double) const= 0;
-    virtual ~Option(); 
+    
     double getExpiry() const;  
     virtual double payoffPath(std::vector<double>& prices) const;
     virtual bool isAsianOption() const {return false;};
+    virtual ~Option(); 
 };
 
 #endif
-#include "Option.cpp"
+

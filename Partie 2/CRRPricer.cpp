@@ -69,3 +69,5 @@ double CRRPricer::operator()(bool closed_form) {
 	}
 
 }
+
+CRRPricer::~CRRPricer(){}

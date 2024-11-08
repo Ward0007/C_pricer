@@ -40,13 +40,11 @@ T BinaryTree<T>:: getNode(int step, int node) const{
     return _tree[step][node];
 }
 
-
-template <typename T>
-BinaryTree<T>::~BinaryTree(){}
-
-
 template <typename T>
 BinaryTree<T>::BinaryTree() : _depth(0) {}
+
+
+
 
 
 template<typename T>
@@ -73,7 +71,8 @@ void BinaryTree<T>:: display(){
     }
 };
 
-std::string repeatString(int n) {
+template <typename T>
+std::string BinaryTree<T>::repeatString(int n)  {
     std :: string space="";
     for (int i=0; i<n;i++){
         space+=" ";
@@ -81,10 +80,14 @@ std::string repeatString(int n) {
     return space;
 }
 
-std::string lien(int n) {
+
+template <typename T>
+std::string BinaryTree<T>::lien(int n) {
     std :: string retour="/   \\";
     for (int i=0; i<n;i++){
         retour+="   /   \\";
     }
     return retour;
 }
+template <typename T>
+BinaryTree<T>::~BinaryTree(){}

@@ -12,12 +12,12 @@ private:
     double initial_price_;
     double interest_rate_;
     double volatility_;
-    int nb_paths=1;  
+    int nb_paths_=1;  
     double price_estimate;   
     double variance;         
 public:
     BlackScholesMCPricer(Option* option, double initial_price, double interest_rate, double volatility);
-    void generate(int nb_paths);
+    void generate(int );
     int getNbPaths() const;
     double operator()() const;
     std::vector<double> confidenceInterval() const;

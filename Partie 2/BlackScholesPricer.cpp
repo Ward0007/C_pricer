@@ -7,8 +7,7 @@ BlackScholesPricer::BlackScholesPricer(Option* option, double asset_price, doubl
 {
 
 }
-BlackScholesPricer::~BlackScholesPricer()
-{}
+
 double BlackScholesPricer::operator()() {
     double S = Asset_price_;
     double r = Interest_rate_;
@@ -97,3 +96,6 @@ double BlackScholesPricer::delta() {
     
     return delta;
 }
+
+BlackScholesPricer::~BlackScholesPricer()
+{}
