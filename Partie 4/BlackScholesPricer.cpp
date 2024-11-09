@@ -1,5 +1,6 @@
 #include "BlackScholesPricer.h"
 using namespace std;
+#include <iostream>
 #include <math.h> 
 
 BlackScholesPricer::BlackScholesPricer(Option* option, double asset_price, double interest_rate, double volatility)
@@ -7,14 +8,15 @@ BlackScholesPricer::BlackScholesPricer(Option* option, double asset_price, doubl
 {
 
 }
-BlackScholesPricer::~BlackScholesPricer()
-{}
+
 double BlackScholesPricer::operator()() {
     double S = Asset_price_;
     double r = Interest_rate_;
     double T = Option_->getExpiry();
     double sigma = Volatility_;
     double d1, d2, prix;
+
+    // Vérification de l'option et récupération de K et du type (call/put)
     double K;
     bool isCall;
     bool isDigital = false;
@@ -29,6 +31,8 @@ double BlackScholesPricer::operator()() {
     } else {
         throw std::logic_error("Option type does not support strike price.");
     }
+
+    // Calcul de d1 et d2
     d1 = (log(S / K) + (r + 0.5 * sigma * sigma) * T) / (sigma * sqrt(T));
     d2 = d1 - sigma * sqrt(T);
 
@@ -36,6 +40,7 @@ double BlackScholesPricer::operator()() {
     if (isDigital) {
         if (isCall) {
             prix = exp(-r * T) * 0.5 * erfc(-d2 / sqrt(2));
+
         } else {
             prix = exp(-r * T) * 0.5 * erfc(d2 / sqrt(2));
         }
@@ -43,6 +48,7 @@ double BlackScholesPricer::operator()() {
         if (isCall) {
             prix = S * 0.5 * erfc(-d1 / sqrt(2)) - K * exp(-r * T) * 0.5 * erfc(-d2 / sqrt(2));
         } else {
+
             prix = -S * 0.5 * erfc(d1 / sqrt(2)) + K * exp(-r * T) * 0.5 * erfc(d2 / sqrt(2));
         }
     }
@@ -55,6 +61,8 @@ double BlackScholesPricer::delta() {
     double T = Option_->getExpiry();
     double sigma = Volatility_;
     double d, delta;
+
+    // Vérification de l'option et récupération de K et du type (call/put)
     double K;
     bool isCall;
     bool isDigital = false;
@@ -69,11 +77,13 @@ double BlackScholesPricer::delta() {
     } else {
         throw std::logic_error("Option type does not support strike price.");
     }
+
+    // Calcul de d
     d = (log(S / K) + (r + 0.5 * sigma * sigma) * T) / (sigma * sqrt(T));
 
     // Calcul du delta en fonction du type d'option (numérique ou vanille) et du type (call ou put)
     if (isDigital) {
-        double pdf_d = exp(-0.5 * d * d) / sqrt(2 * M_PI);  
+        double pdf_d = exp(-0.5 * d * d) / sqrt(2 * M_PI);  // PDF de la loi normale pour d
         if (isCall) {
             delta = pdf_d / (S * sigma * sqrt(T));
         } else {
@@ -89,3 +99,6 @@ double BlackScholesPricer::delta() {
     
     return delta;
 }
+
+BlackScholesPricer::~BlackScholesPricer()
+{}

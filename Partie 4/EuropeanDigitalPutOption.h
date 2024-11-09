@@ -20,4 +20,4 @@ public:
 };
 
 #endif
-#include "EuropeanDigitalPutOption.cpp"
+

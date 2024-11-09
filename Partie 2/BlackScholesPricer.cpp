@@ -1,5 +1,6 @@
 #include "BlackScholesPricer.h"
 using namespace std;
+#include <iostream>
 #include <math.h> 
 
 BlackScholesPricer::BlackScholesPricer(Option* option, double asset_price, double interest_rate, double volatility)
@@ -39,6 +40,7 @@ double BlackScholesPricer::operator()() {
     if (isDigital) {
         if (isCall) {
             prix = exp(-r * T) * 0.5 * erfc(-d2 / sqrt(2));
+
         } else {
             prix = exp(-r * T) * 0.5 * erfc(d2 / sqrt(2));
         }
@@ -46,6 +48,7 @@ double BlackScholesPricer::operator()() {
         if (isCall) {
             prix = S * 0.5 * erfc(-d1 / sqrt(2)) - K * exp(-r * T) * 0.5 * erfc(-d2 / sqrt(2));
         } else {
+
             prix = -S * 0.5 * erfc(d1 / sqrt(2)) + K * exp(-r * T) * 0.5 * erfc(d2 / sqrt(2));
         }
     }

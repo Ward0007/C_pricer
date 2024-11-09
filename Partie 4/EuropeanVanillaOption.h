@@ -18,9 +18,10 @@ protected:
 public:
     EuropeanVanillaOption();
     EuropeanVanillaOption(double, double);
-    virtual ~EuropeanVanillaOption();
+    
     friend class BlackScholesPricer;
+    virtual ~EuropeanVanillaOption();
 };
 
 #endif
-#include "EuropeanVanillaOption.cpp"
+

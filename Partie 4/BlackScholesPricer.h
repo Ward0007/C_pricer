@@ -8,9 +8,10 @@ class BlackScholesPricer
 {
 public:
     BlackScholesPricer(Option* , double, double, double);
-    ~BlackScholesPricer();
+    
     double operator()();
     double delta();
+    ~BlackScholesPricer();
 
 protected:
     Option* Option_;

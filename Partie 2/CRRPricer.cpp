@@ -42,32 +42,22 @@ double CRRPricer::get(int n, int i) const {
 }
 
 double CRRPricer::operator()(bool closed_form) {
-	if (closed_form == true) {
-		double q = (R - D) / (U - D);
-		double H_0_0 = 0.0;
-		double q_i = 1.0;                    
-        double p = 1.0;  //(1 - q)^0 = 1
-        double bin_coef = 1.0;
-		for (int i = 0; i <= N; i++) {
-			double stock_price = S_0;
-			for (int j = 0; j < i; ++j) stock_price *= (1 + U);
-            for (int j = 0; j < (N - i); ++j) stock_price *= (1 + D);
-			H_0_0+= bin_coef * q_i * p * option->payoff(stock_price);
-			q_i *= q;                        
-            p *= (1 - q); 
-            bin_coef *= (N - i) / (i + 1);
-		}
-		double factor = 1.0;
-        for (int j = 0; j < N; ++j) {
-            factor *= (1 + R);
-        }
-		return H_0_0/factor;
-	}
-	else {
-		compute();
-		return get(0, 0);
-	}
+    if (closed_form) {
+        double q = (R - D) / (U - D);
+        double H_0_0 = 0;
 
+        for (int i = 0; i <= N; i++) {
+            double up_factor = std::pow(U + 1, i);
+            double down_factor = std::pow(D + 1, N - i);
+            double stock_price = S_0 * up_factor * down_factor;
+            H_0_0 += tgamma(N + 1) * pow(q, i) * pow(1 - q, N - i) * option->payoff(stock_price) / (tgamma(i + 1) * tgamma(N - i + 1));
+        }
+        H_0_0 = H_0_0 * (1 / pow(1 + R, N));
+        return H_0_0;
+    } else {
+		compute();
+        return get(0,0);
+    }
 }
 
 CRRPricer::~CRRPricer(){}
