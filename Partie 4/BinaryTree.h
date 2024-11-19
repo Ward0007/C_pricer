@@ -1,10 +1,11 @@
 #ifndef BINARYTREE_H
 #define BINARYTREE_H
+
 #include <vector>
 #include <iostream>
 #include <stdexcept>
 #include <string>
-#pragma once
+
 
 template <typename T>
 class BinaryTree
@@ -24,6 +25,7 @@ class BinaryTree
 };
 
 #include "BinaryTree.cpp"
+
 #endif
 
 

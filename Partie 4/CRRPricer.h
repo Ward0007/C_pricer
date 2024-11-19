@@ -18,7 +18,7 @@ public:
 	CRRPricer(Option*, int, double, double, double, double);
 	CRRPricer(Option*, int, double, double, double);
 	void compute();
-	double get(int, int) const;
+	double get(int, int);
 	double operator()(bool closed_form=false);
 	bool getExercise(int, int);
 
